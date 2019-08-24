@@ -1,12 +1,12 @@
 <?php
 // $poker = range(0, 51);
-// get a new poker
+// get a new set of poker cards
 for ($i = 0; $i < 52; $i++) {
     $poker[] = $i;
 }
 
 echo "range<br>";
-// print poker
+// print cards
 $i = 0;
 foreach ($poker as $v) {
     printf("%02d ", $v);
@@ -14,48 +14,6 @@ foreach ($poker as $v) {
         echo "<br>";
     }
 }
-
-// double check repeat
-for ($i = 0; $i < 51; $i++) {
-    for ($j = $i + 1; $j < 52; $j++) {
-        if ($poker[$i] == $poker[$j]) {
-            echo "repeat<br>";
-            break;
-        }
-    }
-}
-echo "<hr>";
-
-// shuffle($poker);
-// get a random poker between 0-th and ($i - 1)-th.
-// swap this poker with $i-th poker
-for ($i = 51; $i > 0; $i--) {
-    $temp = rand(0, $i - 1);
-    $temp2 = $poker[$temp];
-    $poker[$temp] = $poker[$i];
-    $poker[$i] = $temp2;
-}
-
-echo "shuffle<br>";
-// print poker
-$i = 0;
-foreach ($poker as $v) {
-    printf("%02d ", $v);
-    if ((++$i % 13) == 0) {
-        echo "<br>";
-    }
-}
-
-// double check
-for ($i = 0; $i < 51; $i++) {
-    for ($j = $i + 1; $j < 52; $j++) {
-        if ($poker[$i] == $poker[$j]) {
-            echo "repeat<br>";
-            break;
-        }
-    }
-}
-echo "<hr>";
 ?>
 
 <table border=1 width="100%">
@@ -69,12 +27,12 @@ $values = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
 
 $i = 0;
 foreach ($poker as $v) {
-    // first poker for each player
+    // first card
     if (($i % 13) == 0) {
         echo "<tr>";
     }
 
-    // first to last poker for each plyer
+    // first ~ 13-th cards
     echo "<td>";
 
     // 0  ~ 12 is spades
@@ -86,12 +44,105 @@ foreach ($poker as $v) {
 
     echo "</td>";
 
-    // last poker for each player
+    // 13-th card
     if (($i % 13) == 12) {
         echo "</tr>";
     }
 
     $i++;
+}
+?>
+</table>
+<hr>
+
+<?php
+// shuffle($poker);
+for ($i = 51; $i > 0; $i--) {
+    // get a random poker card between 0-th and ($i - 1)-th.
+    $temp = rand(0, $i - 1);
+
+    // swap this poker card with $i-th poker card
+    $temp2 = $poker[$temp];
+    $poker[$temp] = $poker[$i];
+    $poker[$i] = $temp2;
+}
+
+echo "shuffle<br>";
+// print cards
+$i = 0;
+foreach ($poker as $v) {
+    printf("%02d ", $v);
+    if ((++$i % 13) == 0) {
+        echo "<br>";
+    }
+}
+?>
+
+<table border=1 width="100%">
+    <?php
+$i = 0;
+foreach ($poker as $v) {
+    // first card
+    if (($i % 13) == 0) {
+        echo "<tr>";
+    }
+
+    // first ~ 13-th cards
+    echo "<td>";
+
+    // 0  ~ 12 is spades
+    // 13 ~ 25 is hearts
+    // 26 ~ 38 is diams
+    // 39 ~ 51 is clubs
+    echo $suits[(int) ($v / 13)];
+    echo $values[$v % 13];
+
+    echo "</td>";
+
+    // 13-th card
+    if (($i % 13) == 12) {
+        echo "</tr>";
+    }
+
+    $i++;
+}
+?>
+</table>
+<hr>
+
+<?php
+echo "deal<br>";
+for ($i = 0; $i < 4; $i++) {
+    for ($j = 0; $j < 13; $j++) {
+        printf("%02d ", $poker[$i + $j * 4]);
+    }
+    echo "<br>";
+}
+?>
+
+<table border=1 width="100%">
+    <?php
+for ($i = 0; $i < 4; $i++) {
+    // first card
+    echo "<tr>";
+
+    // first ~ 13-th cards
+    for ($j = 0; $j < 13; $j++) {
+        echo "<td>";
+
+        // 0  ~ 12 is spades
+        // 13 ~ 25 is hearts
+        // 26 ~ 38 is diams
+        // 39 ~ 51 is clubs
+        $v = $poker[$i + $j * 4];
+        echo $suits[(int) ($v / 13)];
+        echo $values[$v % 13];
+
+        echo "</td>";
+    }
+
+    // 13-th card
+    echo "</tr>";
 }
 ?>
 </table>
